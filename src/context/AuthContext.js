@@ -13,9 +13,13 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     // Check if we're in a browser environment (client-side)
     if (typeof window !== 'undefined') {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+      try {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        console.error('Error accessing localStorage:', error);
       }
       setLoading(false);
     }
@@ -24,30 +28,46 @@ export function AuthProvider({ children }) {
   const login = (email, password) => {
     // In a real app, this would make an API call
     // For this example, we'll just store the user in localStorage
-    const newUser = { email, name: email.split('@')[0] };
-    localStorage.setItem('user', JSON.stringify(newUser));
-    setUser(newUser);
-    router.push('/dashboard');
+    try {
+      const newUser = { email, name: email.split('@')[0] };
+      localStorage.setItem('user', JSON.stringify(newUser));
+      setUser(newUser);
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('Error storing user data:', error);
+    }
   };
 
   const signup = (email, password) => {
     // Similar to login for this example
-    const newUser = { email, name: email.split('@')[0] };
-    localStorage.setItem('user', JSON.stringify(newUser));
-    setUser(newUser);
-    router.push('/dashboard');
+    try {
+      const newUser = { email, name: email.split('@')[0] };
+      localStorage.setItem('user', JSON.stringify(newUser));
+      setUser(newUser);
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('Error storing user data:', error);
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    router.push('/');
+    try {
+      localStorage.removeItem('user');
+      setUser(null);
+      router.push('/');
+    } catch (error) {
+      console.error('Error removing user data:', error);
+    }
   };
 
   const deleteAccount = () => {
-    localStorage.removeItem('user');
-    setUser(null);
-    router.push('/');
+    try {
+      localStorage.removeItem('user');
+      setUser(null);
+      router.push('/');
+    } catch (error) {
+      console.error('Error removing user data:', error);
+    }
   };
 
   return (
