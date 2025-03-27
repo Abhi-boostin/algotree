@@ -1,6 +1,7 @@
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import DemoCredentials from '@/components/DemoCredentials';
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,6 +26,7 @@ export default function RootLayout({ children }) {
       >
         <AuthProvider>
           {children}
+          <DemoCredentials />
         </AuthProvider>
       </body>
     </html>
